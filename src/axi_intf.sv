@@ -333,6 +333,146 @@ interface AXI_BUS_ASYNC
 
 endinterface
 
+interface AXI_BUS_ASYNC_GRAY
+#(
+  parameter int unsigned AXI_ADDR_WIDTH = 0,
+  parameter int unsigned AXI_DATA_WIDTH = 0,
+  parameter int unsigned AXI_ID_WIDTH   = 0,
+  parameter int unsigned AXI_USER_WIDTH = 0,
+  parameter int unsigned LOG_DEPTH   = 0
+);
+
+   typedef logic [AXI_ID_WIDTH-1:0]   id_t;
+   typedef logic [AXI_ADDR_WIDTH-1:0] addr_t;
+   typedef logic [AXI_DATA_WIDTH-1:0] data_t;
+   typedef logic [AXI_STRB_WIDTH-1:0] strb_t;
+   typedef logic [AXI_USER_WIDTH-1:0] user_t;
+   
+   typedef logic [$bits(axi_pkg::len_t)+$bits(axi_pkg::size_t)+$bits(axi_pkg::burst_t)+$bits(axi_pkg::cache_t)+$bits(axi_pkg::prot_t)+$bits(axi_pkg::qos_t)+$bits(axi_pkg::region_t)+$bits(axi_pkg::atop_t)+$bits(id_t)+$bits(addr_t)+$bits(user_t)+1-1:0] aw_chan_t;
+   typedef logic [1+$bits(user_t)+$bits(strb_t)+$bits(data_t)-1:0]                                                                                                                                                                                         w_chan_t;
+   typedef logic [$bits(user_t)+$bits(axi_pkg::resp_t)+$bits(id_t)-1:0]                                                                                                                                                                                    b_chan_t;
+   typedef logic [$bits(axi_pkg::len_t)+$bits(axi_pkg::size_t)+$bits(axi_pkg::burst_t)+$bits(axi_pkg::cache_t)+$bits(axi_pkg::prot_t)+$bits(axi_pkg::qos_t)+$bits(axi_pkg::region_t)+$bits(id_t)+$bits(addr_t)+$bits(user_t)+1-1:0]                        ar_chan_t;
+   typedef logic [$bits(axi_pkg::resp_t)+$bits(id_t)+$bits(data_t)+$bits(user_t)+1-1:0]                                                                                                                                                                    r_chan_t;
+   
+   
+   logic [LOG_DEPTH:0]                aw_wptr;
+   logic [LOG_DEPTH:0]                aw_rptr;
+   logic aw_chan_t [2**LOG_DEPTH-1:0] aw_data;
+
+   logic [LOG_DEPTH:0]                w_wptr;
+   logic [LOG_DEPTH:0]                w_rptr;
+   logic w_chan_t [2**LOG_DEPTH-1:0]  w_data;
+ 
+   logic [LOG_DEPTH:0]                b_wptr;
+   logic [LOG_DEPTH:0]                b_rptr;
+   logic b_chan_t [2**LOG_DEPTH-1:0]  b_data;
+
+   logic [LOG_DEPTH:0]                ar_wptr;
+   logic [LOG_DEPTH:0]                ar_rptr;
+   logic ar_chan_t [2**LOG_DEPTH-1:0] ar_data;
+
+   logic [LOG_DEPTH:0]                r_wptr;
+   logic [LOG_DEPTH:0]                r_rptr;
+   logic r_chan_t [2**LOG_DEPTH-1:0]  r_data;
+  
+
+   modport Master (
+                   output aw_wprt, aw_data;
+                   input  aw_rptr;
+                   output w_wptr, w_data;
+                   input  w_rptr;
+                   output ar_wptr, ar_data;
+                   input  ar_rptr;
+                   input  r_wptr, r_data;
+                   output r_rptr;
+                   input  b_wptr, b_data;
+                   output b_rptr;
+                   )
+
+
+   modport Slave (
+                   input aw_wprt, aw_data;
+                   output  aw_rptr;
+                   input w_wptr, w_data;
+                   output  w_rptr;
+                   input ar_wptr, ar_data;
+                   output  ar_rptr;
+                   output  r_wptr, r_data;
+                   input r_rptr;
+                   output  b_wptr, b_data;
+                   input b_rptr;
+                   )
+   
+endinterface // AXI_BUS_ASYNC_GRAY
+
+/// An AXI4-Lite interface.
+interface AXI_LITE_ASYNC_GRAY #(
+  parameter int unsigned AXI_ADDR_WIDTH = 0,
+  parameter int unsigned AXI_DATA_WIDTH = 0,
+  parameter int unsigned LOG_DEPTH      = 0 
+);
+
+  localparam int unsigned AXI_STRB_WIDTH = AXI_DATA_WIDTH / 8;
+
+  typedef logic [AXI_ADDR_WIDTH-1:0] addr_t;
+  typedef logic [AXI_DATA_WIDTH-1:0] data_t;
+  typedef logic [AXI_STRB_WIDTH-1:0] strb_t;
+
+   typedef logic [$bits(addr_t)+$bits(axi_pkg::prot_t)-1:0] aw_chan_lite_t ;
+   typedef logic [$bits(data_t)+$bits(strb_t)-1:0]          w_chan_lite_t  ;
+   typedef logic [$bits(axi_pkg::resp_t)-1:0]               b_chan_lite_t  ;
+   typedef logic [$bits(addr_t)+$bits(axi_pkg::prot_t)-1:0] ar_chan_lite_t ;
+   typedef logic [$bits(data_t)+$bits(axi_pkg::resp_t)-1:0] r_chan_lite_t  ;
+
+   logic [LOG_DEPTH:0]                     aw_wptr;
+   logic [LOG_DEPTH:0]                     aw_rptr;
+   logic aw_chan_lite_t [2**LOG_DEPTH-1:0] aw_data;
+
+   logic [LOG_DEPTH:0]                     w_wptr;
+   logic [LOG_DEPTH:0]                     w_rptr;
+   logic w_chan_lite_t [2**LOG_DEPTH-1:0]  w_data;
+ 
+   logic [LOG_DEPTH:0]                     b_wptr;
+   logic [LOG_DEPTH:0]                     b_rptr;
+   logic b_chan_lite_t [2**LOG_DEPTH-1:0]  b_data;
+
+   logic [LOG_DEPTH:0]                     ar_wptr;
+   logic [LOG_DEPTH:0]                     ar_rptr;
+   logic ar_chan_lite_t [2**LOG_DEPTH-1:0] ar_data;
+
+   logic [LOG_DEPTH:0]                     r_wptr;
+   logic [LOG_DEPTH:0]                     r_rptr;
+   logic r_chan_lite_t [2**LOG_DEPTH-1:0]  r_data;
+  
+
+   modport Master (
+                   output aw_wprt, aw_data;
+                   input  aw_rptr;
+                   output w_wptr, w_data;
+                   input  w_rptr;
+                   output ar_wptr, ar_data;
+                   input  ar_rptr;
+                   input  r_wptr, r_data;
+                   output r_rptr;
+                   input  b_wptr, b_data;
+                   output b_rptr;
+                   )
+
+
+   modport Slave (
+                   input aw_wprt, aw_data;
+                   output  aw_rptr;
+                   input w_wptr, w_data;
+                   output  w_rptr;
+                   input ar_wptr, ar_data;
+                   output  ar_rptr;
+                   output  r_wptr, r_data;
+                   input r_rptr;
+                   output  b_wptr, b_data;
+                   input b_rptr;
+                   )
+
+endinterface
 
 /// An AXI4-Lite interface.
 interface AXI_LITE #(
