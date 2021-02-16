@@ -135,7 +135,7 @@ module axi_cdc_src #(
 endmodule
 
 
-module axi_cdc_dst_intf #( 
+module axi_cdc_src_intf #( 
   parameter int unsigned AXI_ID_WIDTH   = 0,
   parameter int unsigned AXI_ADDR_WIDTH = 0,
   parameter int unsigned AXI_DATA_WIDTH = 0,
@@ -145,7 +145,7 @@ module axi_cdc_dst_intf #(
 ) (
    // async master side 
   AXI_BUS_ASYNC_GRAY.Master    dst,
-  // master side - clocked by `dst_clk_i`
+  // sync slave side - clocked by `dst_clk_i`
   input  logic                 src_clk_i,
   input  logic                 src_rst_ni,
   AXI_BUS.Slave                src
@@ -205,7 +205,7 @@ module axi_cdc_dst_intf #(
 endmodule
 
 
-module axi_lite_cdc_dst_intf #( 
+module axi_lite_cdc_src_intf #( 
   parameter int unsigned AXI_ADDR_WIDTH = 0,
   parameter int unsigned AXI_DATA_WIDTH = 0,
   /// Depth of the FIFO crossing the clock domain, given as 2**LOG_DEPTH.
@@ -213,7 +213,7 @@ module axi_lite_cdc_dst_intf #(
 ) (
    // async master side 
   AXI_LITE_ASYNC_GRAY.Master    dst,
-  // master side - clocked by `dst_clk_i`
+  // sync slave syde side - clocked by `dst_clk_i`
   input  logic                 src_clk_i,
   input  logic                 src_rst_ni,
   AXI_BUS.Slave                src
