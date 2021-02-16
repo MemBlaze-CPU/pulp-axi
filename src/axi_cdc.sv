@@ -45,28 +45,31 @@ module axi_cdc #(
   input  axi_resp_t dst_resp_i
 );
    
-    logic [LogDepth:0]          async_data_aw_wptr,
-    logic [LogDepth:0]          async_data_aw_rptr,
-    aw_chan_t [2**LogDepth-1:0] async_data_aw_data,
-    logic [LogDepth:0]          async_data_w_wptr,
-    logic [LogDepth:0]          async_data_w_rptr,
-    w_chan_t [2**LogDepth-1:0]  async_data_w_data,
-    logic [LogDepth:0]          async_data_ar_wptr,
-    logic [LogDepth:0]          async_data_ar_rptr,
-    ar_chan_t [2**LogDepth-1:0] async_data_ar_data,
-    logic [LogDepth:0]          async_data_b_wptr,
-    logic [LogDepth:0]          async_data_b_rptr,
-    b_chan_t [2**LogDepth-1:0]  async_data_b_data,
-    logic [LogDepth:0]          async_data_r_wptr,
-    logic [LogDepth:0]          async_data_r_rptr,
-    r_chan_t [2**LogDepth-1:0]  async_data_r_data,
+    logic [LogDepth:0]          async_data_aw_wptr;
+    logic [LogDepth:0]          async_data_aw_rptr;
+    aw_chan_t [2**LogDepth-1:0] async_data_aw_data;
+    logic [LogDepth:0]          async_data_w_wptr;
+    logic [LogDepth:0]          async_data_w_rptr;
+    w_chan_t [2**LogDepth-1:0]  async_data_w_data;
+    logic [LogDepth:0]          async_data_ar_wptr;
+    logic [LogDepth:0]          async_data_ar_rptr;
+    ar_chan_t [2**LogDepth-1:0] async_data_ar_data;
+    logic [LogDepth:0]          async_data_b_wptr;
+    logic [LogDepth:0]          async_data_b_rptr;
+    b_chan_t [2**LogDepth-1:0]  async_data_b_data;
+    logic [LogDepth:0]          async_data_r_wptr;
+    logic [LogDepth:0]          async_data_r_rptr;
+    r_chan_t [2**LogDepth-1:0]  async_data_r_data;
     
     axi_cdc_src #(
       .aw_chan_t(aw_chan_t),
       .w_chan_t(w_chan_t),
       .b_chan_t(b_chan_t),
       .ar_chan_t(ar_chan_t),
-      .r_chan_t(r_chan_t)
+      .r_chan_t(r_chan_t),
+      .axi_req_t(axi_req_t),
+      .axi_resp_t(axi_resp_t),            
+      .LogDepth(LogDepth)
      ) i_axi_cdc_src (
        .src_clk_i,
        .src_rst_ni,
@@ -95,7 +98,10 @@ module axi_cdc #(
       .w_chan_t(w_chan_t),
       .b_chan_t(b_chan_t),
       .ar_chan_t(ar_chan_t),
-      .r_chan_t(r_chan_t)
+      .r_chan_t(r_chan_t),
+      .axi_req_t(axi_req_t),
+      .axi_resp_t(axi_resp_t),            
+      .LogDepth(LogDepth)
      ) i_axi_cdc_dst (
        .dst_clk_i,
        .dst_rst_ni,

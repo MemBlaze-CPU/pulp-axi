@@ -21,7 +21,7 @@
 /// For each of the five AXI channels, this module instantiates a CDC FIFO SRC / DST, whose push and pop
 /// ports are in separate clock domains.  IMPORTANT: For each AXI channel, you MUST properly
 /// constrain three paths through the FIFO; see the header of `cdc_fifo_gray` for instructions.
-module axi_dc_dst #(
+module axi_cdc_dst #(
    /// Depth of the FIFO crossing the clock domain, given as 2**LOG_DEPTH.
   parameter int unsigned  LogDepth  = 1,
   parameter type aw_chan_t  = logic,
@@ -30,7 +30,7 @@ module axi_dc_dst #(
   parameter type ar_chan_t  = logic,
   parameter type r_chan_t   = logic,
   parameter type axi_req_t  = logic,
-  parameter type axi_resp_t = logic,
+  parameter type axi_resp_t = logic
 ) (
   // master side - clocked by `dst_clk_i`
   input logic               dst_clk_i,
@@ -59,7 +59,7 @@ module axi_dc_dst #(
 
    
     cdc_fifo_gray_dst #(
-        .WIDTH          ( $bits(aw_chan_t)                       ),
+        .T              ( logic[$bits(aw_chan_t)-1:0]            ),
         .LOG_DEPTH      ( LogDepth                               )
     ) cdc_fifo_gray_dst_aw (                                  
         .dst_rst_ni           ( dst_rst_ni                       ),
@@ -74,7 +74,7 @@ module axi_dc_dst #(
 
 
    cdc_fifo_gray_dst #(
-        .WIDTH    ( $bits(w_chan_t)                              ),
+        .T        ( logic [$bits(w_chan_t)-1:0]                  ),
         .LOG_DEPTH( LogDepth                                     )
     ) cdc_fifo_gray_dst_w (
         .dst_rst_ni           ( dst_rst_ni                       ),
@@ -89,7 +89,7 @@ module axi_dc_dst #(
 
 
    cdc_fifo_gray_src #(
-        .WIDTH    ( $bits(b_chan_t)                              ),
+        .T        ( logic [$bits(b_chan_t)-1:0]                  ),
         .LOG_DEPTH( LogDepth                                     )
     ) cdc_fifo_gray_src_b (
         .src_rst_ni           ( dst_rst_ni                       ),
@@ -104,7 +104,7 @@ module axi_dc_dst #(
 
 
    cdc_fifo_gray_src #(
-        .WIDTH    ( $bits(r_chan_t)                              ),
+        .T        ( logic [$bits(r_chan_t)-1:0]                  ),
         .LOG_DEPTH( LogDepth                                     )   
     ) cdc_fifo_gray_src_r (
         .src_rst_ni           ( dst_rst_ni                      ),
@@ -118,7 +118,7 @@ module axi_dc_dst #(
     );
 
    cdc_fifo_gray_dst #(
-        .WIDTH    ( $bits(w_chan_t)                              ),
+        .T        ( logic [$bits(ar_chan_t)-1:0]                  ),
         .LOG_DEPTH( LogDepth                                     )
     ) cdc_fifo_gray_dst_ar (
         .dst_rst_ni           ( dst_rst_ni                       ),

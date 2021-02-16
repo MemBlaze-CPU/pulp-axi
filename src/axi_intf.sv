@@ -342,6 +342,8 @@ interface AXI_BUS_ASYNC_GRAY
   parameter int unsigned LOG_DEPTH   = 0
 );
 
+   localparam int unsigned AXI_STRB_WIDTH = AXI_DATA_WIDTH / 8;
+
    typedef logic [AXI_ID_WIDTH-1:0]   id_t;
    typedef logic [AXI_ADDR_WIDTH-1:0] addr_t;
    typedef logic [AXI_DATA_WIDTH-1:0] data_t;
@@ -357,51 +359,53 @@ interface AXI_BUS_ASYNC_GRAY
    
    logic [LOG_DEPTH:0]                aw_wptr;
    logic [LOG_DEPTH:0]                aw_rptr;
-   logic aw_chan_t [2**LOG_DEPTH-1:0] aw_data;
+   aw_chan_t [2**LOG_DEPTH-1:0] aw_data;
 
    logic [LOG_DEPTH:0]                w_wptr;
    logic [LOG_DEPTH:0]                w_rptr;
-   logic w_chan_t [2**LOG_DEPTH-1:0]  w_data;
+   w_chan_t [2**LOG_DEPTH-1:0]  w_data;
  
    logic [LOG_DEPTH:0]                b_wptr;
    logic [LOG_DEPTH:0]                b_rptr;
-   logic b_chan_t [2**LOG_DEPTH-1:0]  b_data;
+   b_chan_t [2**LOG_DEPTH-1:0]  b_data;
 
    logic [LOG_DEPTH:0]                ar_wptr;
    logic [LOG_DEPTH:0]                ar_rptr;
-   logic ar_chan_t [2**LOG_DEPTH-1:0] ar_data;
+   ar_chan_t [2**LOG_DEPTH-1:0] ar_data;
 
    logic [LOG_DEPTH:0]                r_wptr;
    logic [LOG_DEPTH:0]                r_rptr;
-   logic r_chan_t [2**LOG_DEPTH-1:0]  r_data;
+   r_chan_t [2**LOG_DEPTH-1:0]  r_data;
   
 
    modport Master (
-                   output aw_wprt, aw_data;
-                   input  aw_rptr;
-                   output w_wptr, w_data;
-                   input  w_rptr;
-                   output ar_wptr, ar_data;
-                   input  ar_rptr;
-                   input  r_wptr, r_data;
-                   output r_rptr;
-                   input  b_wptr, b_data;
-                   output b_rptr;
-                   )
+                   output aw_wptr, aw_data,
+                   input  aw_rptr,
+                   output w_wptr, w_data,
+                   input  w_rptr,
+                   output ar_wptr, ar_data,
+                   input  ar_rptr,
+                   input  r_wptr, r_data,
+                   output r_rptr,
+                   input  b_wptr, b_data,
+                   output b_rptr
+                   );
+   
 
 
    modport Slave (
-                   input aw_wprt, aw_data;
-                   output  aw_rptr;
-                   input w_wptr, w_data;
-                   output  w_rptr;
-                   input ar_wptr, ar_data;
-                   output  ar_rptr;
-                   output  r_wptr, r_data;
-                   input r_rptr;
-                   output  b_wptr, b_data;
-                   input b_rptr;
-                   )
+                   input aw_wptr, aw_data,
+                   output  aw_rptr,
+                   input w_wptr, w_data,
+                   output  w_rptr,
+                   input ar_wptr, ar_data,
+                   output  ar_rptr,
+                   output  r_wptr, r_data,
+                   input r_rptr,
+                   output  b_wptr, b_data,
+                   input b_rptr
+                  );
+   
    
 endinterface // AXI_BUS_ASYNC_GRAY
 
@@ -426,51 +430,53 @@ interface AXI_LITE_ASYNC_GRAY #(
 
    logic [LOG_DEPTH:0]                     aw_wptr;
    logic [LOG_DEPTH:0]                     aw_rptr;
-   logic aw_chan_lite_t [2**LOG_DEPTH-1:0] aw_data;
+   aw_chan_lite_t [2**LOG_DEPTH-1:0] aw_data;
 
    logic [LOG_DEPTH:0]                     w_wptr;
    logic [LOG_DEPTH:0]                     w_rptr;
-   logic w_chan_lite_t [2**LOG_DEPTH-1:0]  w_data;
+   w_chan_lite_t [2**LOG_DEPTH-1:0]  w_data;
  
    logic [LOG_DEPTH:0]                     b_wptr;
    logic [LOG_DEPTH:0]                     b_rptr;
-   logic b_chan_lite_t [2**LOG_DEPTH-1:0]  b_data;
+   b_chan_lite_t [2**LOG_DEPTH-1:0]  b_data;
 
    logic [LOG_DEPTH:0]                     ar_wptr;
    logic [LOG_DEPTH:0]                     ar_rptr;
-   logic ar_chan_lite_t [2**LOG_DEPTH-1:0] ar_data;
+   ar_chan_lite_t [2**LOG_DEPTH-1:0] ar_data;
 
    logic [LOG_DEPTH:0]                     r_wptr;
    logic [LOG_DEPTH:0]                     r_rptr;
-   logic r_chan_lite_t [2**LOG_DEPTH-1:0]  r_data;
+   r_chan_lite_t [2**LOG_DEPTH-1:0]  r_data;
   
 
    modport Master (
-                   output aw_wprt, aw_data;
-                   input  aw_rptr;
-                   output w_wptr, w_data;
-                   input  w_rptr;
-                   output ar_wptr, ar_data;
-                   input  ar_rptr;
-                   input  r_wptr, r_data;
-                   output r_rptr;
-                   input  b_wptr, b_data;
-                   output b_rptr;
-                   )
+                   output aw_wptr, aw_data,
+                   input  aw_rptr,
+                   output w_wptr, w_data,
+                   input  w_rptr,
+                   output ar_wptr, ar_data,
+                   input  ar_rptr,
+                   input  r_wptr, r_data,
+                   output r_rptr,
+                   input  b_wptr, b_data,
+                   output b_rptr
+                   );
+   
 
 
    modport Slave (
-                   input aw_wprt, aw_data;
-                   output  aw_rptr;
-                   input w_wptr, w_data;
-                   output  w_rptr;
-                   input ar_wptr, ar_data;
-                   output  ar_rptr;
-                   output  r_wptr, r_data;
-                   input r_rptr;
-                   output  b_wptr, b_data;
-                   input b_rptr;
-                   )
+                   input aw_wptr, aw_data,
+                   output  aw_rptr,
+                   input w_wptr, w_data,
+                   output  w_rptr,
+                   input ar_wptr, ar_data,
+                   output  ar_rptr,
+                   output  r_wptr, r_data,
+                   input r_rptr,
+                   output  b_wptr, b_data,
+                   input b_rptr
+                  );
+   
 
 endinterface
 

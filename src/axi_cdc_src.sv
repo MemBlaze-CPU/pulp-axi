@@ -30,7 +30,7 @@ module axi_cdc_src #(
   parameter type ar_chan_t  = logic,
   parameter type r_chan_t   = logic,
   parameter type axi_req_t  = logic,
-  parameter type axi_resp_t = logic,
+  parameter type axi_resp_t = logic
 ) (
   // slave side - clocked by `src_clk_i`
   input logic               src_clk_i,
@@ -59,76 +59,76 @@ module axi_cdc_src #(
 
  
    cdc_fifo_gray_src #(
-        .WIDTH($bits(aw_chan_t) ),
-        .LOG_DEPTH(LogDepth)
+        .T         ( logic [$bits(aw_chan_t)-1:0]         ),
+        .LOG_DEPTH ( LogDepth                             )
    ) cdc_fifo_gray_src_aw (
-     .src_rst_ni   ( src_rst_ni                         ),
-     .src_clk_i    ( src_clk_i                          ),
+     .src_rst_ni   ( src_rst_ni                           ),
+     .src_clk_i    ( src_clk_i                            ),
      .src_data_i   ( src_req_i.aw                         ),
      .src_valid_i  ( src_req_i.aw_valid & ~isolate_i      ),
      .src_ready_o  ( src_resp_o.aw_ready                  ),
-     .async_data_o ( async_data_master_aw_data_o        ),
-     .async_wptr_o ( async_data_master_aw_wptr_o        ),
-     .async_rptr_i ( async_data_master_aw_rptr_i        )
+     .async_data_o ( async_data_master_aw_data_o          ),
+     .async_wptr_o ( async_data_master_aw_wptr_o          ),
+     .async_rptr_i ( async_data_master_aw_rptr_i          )
    );
    
 
    cdc_fifo_gray_src #(
-        .WIDTH($bits(w_chan_t) ),
-        .LOG_DEPTH(LogDepth)
+        .T         ( logic [$bits(w_chan_t)-1:0]          ),
+        .LOG_DEPTH ( LogDepth                             )
    ) cdc_fifo_gray_src_w (
-     .src_rst_ni   ( src_rst_ni                         ),
-     .src_clk_i    ( src_clk_i                          ),
+     .src_rst_ni   ( src_rst_ni                           ),
+     .src_clk_i    ( src_clk_i                            ),
      .src_data_i   ( src_req_i.w                          ),
      .src_valid_i  ( src_req_i.w_valid  & ~isolate_i      ),
      .src_ready_o  ( src_resp_o.w_ready                   ),
-     .async_data_o ( async_data_master_w_data_o         ),
-     .async_wptr_o ( async_data_master_w_wptr_o         ),
-     .async_rptr_i ( async_data_master_w_rptr_i         )
+     .async_data_o ( async_data_master_w_data_o           ),
+     .async_wptr_o ( async_data_master_w_wptr_o           ),
+     .async_rptr_i ( async_data_master_w_rptr_i           )
    );
 
 
    cdc_fifo_gray_dst #(
-        .WIDTH($bits(b_chan_t) ),
-        .LOG_DEPTH(LogDepth)
+        .T         ( logic [$bits(b_chan_t)-1:0]          ),
+        .LOG_DEPTH ( LogDepth                             )
    ) cdc_fifo_gray_dst_b (
-     .dst_rst_ni   ( src_rst_ni                         ),
-     .dst_clk_i    ( src_clk_i                          ),
+     .dst_rst_ni   ( src_rst_ni                           ),
+     .dst_clk_i    ( src_clk_i                            ),
      .dst_data_o   ( src_resp_o.b                         ),
      .dst_valid_o  ( src_resp_o.b_valid                   ),
      .dst_ready_i  ( src_req_i.b_ready  & ~isolate_i      ),
-     .async_data_i ( async_data_master_b_data_i         ),
-     .async_wptr_i ( async_data_master_b_wptr_i         ),
-     .async_rptr_o ( async_data_master_b_rptr_o         )
+     .async_data_i ( async_data_master_b_data_i           ),
+     .async_wptr_i ( async_data_master_b_wptr_i           ),
+     .async_rptr_o ( async_data_master_b_rptr_o           )
    );
 
 
    cdc_fifo_gray_dst #(
-        .WIDTH($bits(r_chan_t) ),
-        .LOG_DEPTH(LogDepth)
+        .T         ( logic [$bits(r_chan_t)-1:0]          ),
+        .LOG_DEPTH ( LogDepth                             )
    ) cdc_fifo_gray_dst_r (
-     .dst_rst_ni   ( src_rst_ni                         ),
-     .dst_clk_i    ( src_clk_i                          ),
+     .dst_rst_ni   ( src_rst_ni                           ),
+     .dst_clk_i    ( src_clk_i                            ),
      .dst_data_o   ( src_resp_o.r                         ),
      .dst_valid_o  ( src_resp_o.r_valid                   ),
      .dst_ready_i  ( src_req_i.r_ready  & ~isolate_i      ),
-     .async_data_i ( async_data_master_r_data_i         ),
-     .async_wptr_i ( async_data_master_r_wptr_i         ),
-     .async_rptr_o ( async_data_master_r_rptr_o         )
+     .async_data_i ( async_data_master_r_data_i           ),
+     .async_wptr_i ( async_data_master_r_wptr_i           ),
+     .async_rptr_o ( async_data_master_r_rptr_o           )
    );
 
    cdc_fifo_gray_src #(
-        .WIDTH($bits(ar_chan_t) ),
-        .LOG_DEPTH(LogDepth)
+        .T         ( logic [$bits(ar_chan_t)-1:0]         ),
+        .LOG_DEPTH ( LogDepth                             )
    ) cdc_fifo_gray_src_ar (
-     .src_rst_ni   ( src_rst_ni                         ),
-     .src_clk_i    ( src_clk_i                          ),
+     .src_rst_ni   ( src_rst_ni                           ),
+     .src_clk_i    ( src_clk_i                            ),
      .src_data_i   ( src_req_i.ar                         ),
      .src_valid_i  ( src_req_i.ar_valid  & ~isolate_i     ),
      .src_ready_o  ( src_resp_o.ar_ready                  ),
-     .async_data_o ( async_data_master_ar_data_o        ),
-     .async_wptr_o ( async_data_master_ar_wptr_o        ),
-     .async_rptr_i ( async_data_master_ar_rptr_i        )
+     .async_data_o ( async_data_master_ar_data_o          ),
+     .async_wptr_o ( async_data_master_ar_wptr_o          ),
+     .async_rptr_i ( async_data_master_ar_rptr_i          )
    );
    
    
