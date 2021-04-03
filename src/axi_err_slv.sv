@@ -42,24 +42,8 @@ module axi_err_slv #(
   req_t   err_req;
   resp_t  err_resp;
 
-  if (ATOPs) begin
-    axi_atop_filter #(
-      .AxiIdWidth       ( AxiIdWidth  ),
-      .AxiMaxWriteTxns  ( MaxTrans    ),
-      .req_t            ( req_t       ),
-      .resp_t           ( resp_t      )
-    ) i_atop_filter (
-      .clk_i,
-      .rst_ni,
-      .slv_req_i  ( slv_req_i   ),
-      .slv_resp_o ( slv_resp_o  ),
-      .mst_req_o  ( err_req     ),
-      .mst_resp_i ( err_resp    )
-    );
-  end else begin
     assign err_req    = slv_req_i;
     assign slv_resp_o = err_resp;
-  end
 
   // w fifo
   logic    w_fifo_full, w_fifo_empty;
