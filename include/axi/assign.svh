@@ -14,7 +14,9 @@
 // - Wolfgang Roenninger <wroennin@iis.ee.ethz.ch>
 
 // Macros to assign AXI Interfaces and Structs
-
+`ifdef XILINX_SIMULATOR
+`define VERILATOR
+`endif
 `ifndef AXI_ASSIGN_SVH_
 `define AXI_ASSIGN_SVH_
 
