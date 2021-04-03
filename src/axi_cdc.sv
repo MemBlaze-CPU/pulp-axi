@@ -16,7 +16,7 @@
 // - Wolfgang Roenninger <wroennin@iis.ee.ethz.ch>
 
 `include "axi/assign.svh"
-
+import axi_pkg::*;
 /// A clock domain crossing on an AXI interface.
 ///
 /// For each of the five AXI channels, this module instantiates a CDC FIFO, whose push and pop
