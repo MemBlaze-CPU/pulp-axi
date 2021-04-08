@@ -443,7 +443,8 @@ module axi_mux_intf #(
   input  logic   clk_i,                  // Clock
   input  logic   rst_ni,                 // Asynchronous reset active low
   input  logic   test_i,                 // Testmode enable
-  AXI_BUS.Slave  slv [NO_SLV_PORTS-1:0], // slave ports
+  AXI_BUS.Slave  slv0,
+  AXI_BUS.Slave  slv1,
   AXI_BUS.Master mst                     // master port
 );
 
@@ -479,10 +480,7 @@ module axi_mux_intf #(
   mst_req_t                     mst_req;
   mst_resp_t                    mst_resp;
 
-  for (genvar i = 0; i < NO_SLV_PORTS; i++) begin : gen_assign_slv_ports
-    `AXI_ASSIGN_TO_REQ(slv_reqs[i], slv[i])
-    `AXI_ASSIGN_FROM_RESP(slv[i], slv_resps[i])
-  end
+  `define AXI_ASSIGN_SLV(_i_) `AXI_ASSIGN_TO_REQ(slv_reqs[i], slv``_i_) `AXI_ASSIGN_FROM_RESP(slv``_i_, slv_resps[i])
 
   `AXI_ASSIGN_FROM_REQ(mst, mst_req)
   `AXI_ASSIGN_TO_RESP(mst_resp, mst)
