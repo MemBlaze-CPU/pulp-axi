@@ -480,7 +480,9 @@ module axi_mux_intf #(
   mst_req_t                     mst_req;
   mst_resp_t                    mst_resp;
 
-  `define AXI_ASSIGN_SLV(_i_) `AXI_ASSIGN_TO_REQ(slv_reqs[i], slv``_i_) `AXI_ASSIGN_FROM_RESP(slv``_i_, slv_resps[i])
+  `define AXI_ASSIGN_SLV(_i_) `AXI_ASSIGN_TO_REQ(slv_reqs[_i_], slv``_i_) `AXI_ASSIGN_FROM_RESP(slv``_i_, slv_resps[_i_])
+  `AXI_ASSIGN_SLV(0)
+  `AXI_ASSIGN_SLV(1)
 
   `AXI_ASSIGN_FROM_REQ(mst, mst_req)
   `AXI_ASSIGN_TO_RESP(mst_resp, mst)
