@@ -445,6 +445,7 @@ module axi_mux_intf #(
   input  logic   test_i,                 // Testmode enable
   AXI_BUS.Slave  slv0,
   AXI_BUS.Slave  slv1,
+  AXI_BUS.Slave  slv2,
   AXI_BUS.Master mst                     // master port
 );
 
@@ -483,7 +484,8 @@ module axi_mux_intf #(
   `define AXI_ASSIGN_SLV(_i_) `AXI_ASSIGN_TO_REQ(slv_reqs[_i_], slv``_i_) `AXI_ASSIGN_FROM_RESP(slv``_i_, slv_resps[_i_])
   `AXI_ASSIGN_SLV(0)
   `AXI_ASSIGN_SLV(1)
-
+  `AXI_ASSIGN_SLV(2)
+ 
   `AXI_ASSIGN_FROM_REQ(mst, mst_req)
   `AXI_ASSIGN_TO_RESP(mst_resp, mst)
 
