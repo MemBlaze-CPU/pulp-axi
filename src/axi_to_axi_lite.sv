@@ -217,7 +217,7 @@ module axi_to_axi_lite_intf #(
   parameter int unsigned AXI_ADDR_WIDTH     = 32'd0,
   parameter int unsigned AXI_DATA_WIDTH     = 32'd0,
   parameter int unsigned AXI_ID_WIDTH       = 32'd0,
-  parameter int unsigned AXI_USER_WIDTH     = 32'd0,
+  parameter int unsigned AXI_USER_WIDTH     = 32'd1,
   /// Maximum number of outstanding writes.
   parameter int unsigned AXI_MAX_WRITE_TXNS = 32'd1,
   /// Maximum number of outstanding reads.

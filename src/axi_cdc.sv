@@ -136,7 +136,7 @@ module axi_cdc_intf #(
   parameter int unsigned AXI_ID_WIDTH   = 0,
   parameter int unsigned AXI_ADDR_WIDTH = 0,
   parameter int unsigned AXI_DATA_WIDTH = 0,
-  parameter int unsigned AXI_USER_WIDTH = 0,
+  parameter int unsigned AXI_USER_WIDTH = 1,
   /// Depth of the FIFO crossing the clock domain, given as 2**LOG_DEPTH.
   parameter int unsigned LOG_DEPTH = 1
 ) (

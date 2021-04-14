@@ -661,7 +661,7 @@ module axi_demux_intf #(
   parameter int unsigned AXI_ID_WIDTH     = 32'd0, // Synopsys DC requires default value for params
   parameter int unsigned AXI_ADDR_WIDTH   = 32'd0,
   parameter int unsigned AXI_DATA_WIDTH   = 32'd0,
-  parameter int unsigned AXI_USER_WIDTH   = 32'd0,
+  parameter int unsigned AXI_USER_WIDTH   = 32'd1,
   parameter int unsigned NO_MST_PORTS     = 32'd3,
   parameter int unsigned MAX_TRANS        = 32'd8,
   parameter int unsigned AXI_LOOK_BITS    = 32'd3,
@@ -750,7 +750,7 @@ module my_axi_demux_intf #(
   parameter int unsigned AXI_ID_WIDTH     = 32'd0, // Synopsys DC requires default value for params
   parameter int unsigned AXI_ADDR_WIDTH   = 32'd0,
   parameter int unsigned AXI_DATA_WIDTH   = 32'd0,
-  parameter int unsigned AXI_USER_WIDTH   = 32'd0,
+  parameter int unsigned AXI_USER_WIDTH   = 32'd1,
   parameter int unsigned NO_MST_PORTS     = 32'd3,
   parameter int unsigned MAX_TRANS        = 32'd8,
   parameter int unsigned AXI_LOOK_BITS    = 32'd3,

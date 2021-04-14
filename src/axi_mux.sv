@@ -426,7 +426,7 @@ module axi_mux_intf #(
   parameter int unsigned MST_AXI_ID_WIDTH = 32'd0,
   parameter int unsigned AXI_ADDR_WIDTH   = 32'd0,
   parameter int unsigned AXI_DATA_WIDTH   = 32'd0,
-  parameter int unsigned AXI_USER_WIDTH   = 32'd0,
+  parameter int unsigned AXI_USER_WIDTH   = 32'd1,
   parameter int unsigned NO_SLV_PORTS     = 32'd0, // Number of slave ports
   // Maximum number of outstanding transactions per write
   parameter int unsigned MAX_W_TRANS      = 32'd8,

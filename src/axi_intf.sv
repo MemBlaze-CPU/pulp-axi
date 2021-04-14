@@ -21,7 +21,7 @@ interface AXI_BUS #(
   parameter int unsigned AXI_ADDR_WIDTH = 0,
   parameter int unsigned AXI_DATA_WIDTH = 0,
   parameter int unsigned AXI_ID_WIDTH   = 0,
-  parameter int unsigned AXI_USER_WIDTH = 0
+  parameter int unsigned AXI_USER_WIDTH = 1
 );
 
   localparam int unsigned AXI_STRB_WIDTH = AXI_DATA_WIDTH / 8;
