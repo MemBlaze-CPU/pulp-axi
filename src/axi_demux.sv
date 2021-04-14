@@ -91,7 +91,6 @@ module axi_demux #(
     logic                     aw_select_occupied, aw_id_cnt_full;
     logic                     aw_push;
     // Upon an ATOP load, inject IDs from the AW into the AR channel
-    logic                     atop_inject;
 
     // W FIFO: stores the decision to which master W beats should go
     logic                     w_fifo_pop;
@@ -181,7 +180,6 @@ module axi_demux #(
       // AW ID counter and W FIFO
       aw_push      = 1'b0;
       // ATOP injection into ar counter
-      atop_inject  = 1'b0;
       // we had an arbitration decision, the valid is locked, wait for the transaction
       if (lock_aw_valid_q) begin
         aw_valid = 1'b1;
@@ -190,7 +188,6 @@ module axi_demux #(
           slv_aw_ready    = 1'b1;
           lock_aw_valid_d = 1'b0;
           load_aw_lock    = 1'b1;
-          atop_inject     = slv_aw_chan_select.aw_chan.atop[5]; // inject the ATOP if necessary
         end
       end else begin
         // Process can start handling a transaction if its `i_aw_id_counter` and `w_fifo` have
@@ -206,7 +203,6 @@ module axi_demux #(
             // on AW transaction
             if (aw_ready) begin
               slv_aw_ready = 1'b1;
-              atop_inject  = slv_aw_chan_select.aw_chan.atop[5];
             // no AW transaction this cycle, lock the decision
             end else begin
               lock_aw_valid_d = 1'b1;
@@ -398,7 +394,7 @@ module axi_demux #(
       .lookup_mst_select_occupied_o ( ar_select_occupied                            ),
       .full_o                       ( ar_id_cnt_full                                ),
       .inject_axi_id_i              ( slv_aw_chan_select.aw_chan.id[0+:AxiLookBits] ),
-      .inject_i                     ( atop_inject                                   ),
+      .inject_i                     ( 0 ),
       .push_axi_id_i                ( slv_ar_chan_select.ar_chan.id[0+:AxiLookBits] ),
       .push_mst_select_i            ( slv_ar_chan_select.ar_select                  ),
       .push_i                       ( ar_push                                       ),
