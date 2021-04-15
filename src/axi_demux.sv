@@ -394,7 +394,7 @@ module axi_demux #(
       .lookup_mst_select_occupied_o ( ar_select_occupied                            ),
       .full_o                       ( ar_id_cnt_full                                ),
       .inject_axi_id_i              ( slv_aw_chan_select.aw_chan.id[0+:AxiLookBits] ),
-      .inject_i                     ( 0 ),
+      .inject_i                     ( 1'b0 ),
       .push_axi_id_i                ( slv_ar_chan_select.ar_chan.id[0+:AxiLookBits] ),
       .push_mst_select_i            ( slv_ar_chan_select.ar_select                  ),
       .push_i                       ( ar_push                                       ),
