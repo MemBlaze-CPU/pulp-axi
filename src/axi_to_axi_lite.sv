@@ -193,9 +193,6 @@ module axi_to_axi_lite_id_reflect #(
   // Assertions
   // pragma translate_off
   `ifndef VERILATOR
-  aw_atop: assume property( @(posedge clk_i) disable iff (~rst_ni)
-                        slv_req_i.aw_valid |-> (slv_req_i.aw.atop == '0)) else
-    $fatal(1, "Module does not support atomics. Value observed: %0b", slv_req_i.aw.atop);
   aw_axi_len: assume property( @(posedge clk_i) disable iff (~rst_ni)
                         slv_req_i.aw_valid |-> (slv_req_i.aw.len == '0)) else
     $fatal(1, "AW request length has to be zero. Value observed: %0b", slv_req_i.aw.len);
